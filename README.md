@@ -1,6 +1,12 @@
-pipenv shell
+# Staring up
+1. pipenv install
+2. pipenv shell
 
-Libraries
-[] pipeline
-[] FN.py 
-[] PyMonad
+# Libraries
+- [X] pipeline
+- [X] FN.py 
+- [ ] PyMonad
+
+# Evaluation
+- [ ] Criteria
+- [ ] Ranking
