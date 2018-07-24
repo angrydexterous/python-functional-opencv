@@ -1,4 +1,4 @@
-# Staring up
+# Starting up
 1. pipenv install
 2. pipenv shell
 
@@ -7,7 +7,3 @@
 - [X] FN.py 
 - [ ] PyMonad
 - [ ] PyFunctional
-
-# Evaluation
-- [ ] Criteria
-- [ ] Ranking
