@@ -6,6 +6,7 @@
 - [X] pipeline
 - [X] FN.py 
 - [ ] PyMonad
+- [ ] PyFunctional
 
 # Evaluation
 - [ ] Criteria
