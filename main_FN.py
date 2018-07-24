@@ -1,15 +1,10 @@
 """Test project for functional coding"""
 import cv2
 import numpy as np
-from toolz import partial, curry
-from pipetools import maybe
-from functools import reduce
-from fn import _, F
+from fn import _, F, op, Stream
 
 
-@curry
 def video_runner(context: int, f):
-    @curry
     def get_frame(c):
         code, frame = c.read()
         if code:
@@ -22,7 +17,6 @@ def video_runner(context: int, f):
     cap.release()
 
 
-@curry
 def image_runner(file, f):
     img = cv2.imread(file)
     f(lambda: img)
@@ -48,20 +42,21 @@ def do_processing(get_frame):
     # processing loop
     def processing():
         while 1:
-            res = (maybe | F(lambda img: cv2.cvtColor(img, code=cv2.COLOR_BGR2GRAY))
-                         | F(lambda img: cv2.flip(img, flipCode=1))
-                         | do_auto_canny
-                         | show_and_pipe)(get_frame())
+            res = (F()
+                   >> F(lambda img: cv2.cvtColor(img, code=cv2.COLOR_BGR2GRAY))
+                   >> F(lambda img: cv2.flip(img, flipCode=1))
+                   >> do_auto_canny
+                   >> show_and_pipe)(get_frame())
             if res is not None:
                 yield res
             else:
                 break
 
-    reduce(lambda acc, img: [], processing(), [])
+    op.reduce(lambda acc, img: [], processing(), [])
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    ir = image_runner('images/test.PNG')
-    vr = video_runner(0)
+    ir = F(lambda f: image_runner('images/test.PNG', f))
+    vr = F(lambda f: video_runner(0, f))
     vr(do_processing)
