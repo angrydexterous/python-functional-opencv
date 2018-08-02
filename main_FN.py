@@ -1,11 +1,12 @@
 """Test project for functional coding"""
 import cv2
 import numpy as np
-from fn import _, F, op, Stream
+from fn import F, op
+from typing import Callable, Any, Iterable, Optional
 
 
-def video_runner(context: int, f):
-    def get_frame(c):
+def video_runner(context: int, f: Callable[[Any], Any]) -> None:
+    def get_frame(c: cv2.VideoCapture) -> Optional[Any]:
         code, frame = c.read()
         if code:
             return frame
@@ -17,7 +18,7 @@ def video_runner(context: int, f):
     cap.release()
 
 
-def image_runner(file, f):
+def image_runner(file: str, f: Callable[[Any], Any]) -> None:
     img = cv2.imread(file)
     f(lambda: img)
 
@@ -52,6 +53,7 @@ def do_processing(get_frame):
             else:
                 break
 
+    print(type(get_frame))
     op.reduce(lambda acc, img: [], processing(), [])
     cv2.destroyAllWindows()
 
