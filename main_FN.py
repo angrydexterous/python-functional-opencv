@@ -2,11 +2,9 @@
 import cv2
 import numpy as np
 from fn import F, op
-from typing import Callable, Any, Iterable, Optional
 
-
-def video_runner(context: int, f: Callable[[Any], None]) -> None:
-    def get_frame(c: cv2.VideoCapture) -> Optional[np.ndarray]:
+def video_runner(context, f):
+    def get_frame(c):
         code, frame = c.read()
         if code:
             return frame
@@ -18,7 +16,7 @@ def video_runner(context: int, f: Callable[[Any], None]) -> None:
     cap.release()
 
 
-def image_runner(file: str, f: Callable[[Any], None]) -> None:
+def image_runner(file, f):
     img = cv2.imread(file)
     f(lambda: img)
 
@@ -53,7 +51,6 @@ def do_processing(get_frame):
             else:
                 break
 
-    print(type(get_frame))
     op.reduce(lambda acc, img: [], processing(), [])
     cv2.destroyAllWindows()
 
