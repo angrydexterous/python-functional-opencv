@@ -5,8 +5,8 @@ from fn import F, op
 from typing import Callable, Any, Iterable, Optional
 
 
-def video_runner(context: int, f: Callable[[Any], Any]) -> None:
-    def get_frame(c: cv2.VideoCapture) -> Optional[Any]:
+def video_runner(context: int, f: Callable[[Any], None]) -> None:
+    def get_frame(c: cv2.VideoCapture) -> Optional[np.ndarray]:
         code, frame = c.read()
         if code:
             return frame
@@ -18,7 +18,7 @@ def video_runner(context: int, f: Callable[[Any], Any]) -> None:
     cap.release()
 
 
-def image_runner(file: str, f: Callable[[Any], Any]) -> None:
+def image_runner(file: str, f: Callable[[Any], None]) -> None:
     img = cv2.imread(file)
     f(lambda: img)
 
