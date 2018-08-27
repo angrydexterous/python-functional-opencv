@@ -12,3 +12,4 @@
 - [X] FN.py 
 - [ ] PyMonad
 - [ ] PyFunctional
+- [ ] databot pipelines
